@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
-const validateFEN = require('fen-validator');
+const validateFEN = require('fen-validator').default;
 
 const app = express();
 const port = process.env.PORT || 3000;

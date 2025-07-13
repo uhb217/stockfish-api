@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
+const fenValidator = require('fen-validator');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,7 +16,6 @@ function runStockfish(fen, depth) {
 
     stockfish.stdout.on('data', (data) => {
       const output = data.toString();
-      // console.log('SF:', output);
       if (output.includes('bestmove')) {
         const match = output.match(/bestmove\s(\S+)/);
         if (match) bestMove = match[1];
@@ -39,7 +39,16 @@ function runStockfish(fen, depth) {
 
 app.post('/evaluate', async (req, res) => {
   const { fen, depth } = req.body;
-  if (!fen) return res.status(400).json({ error: 'FEN required' });
+
+  if (!fen) {
+    return res.status(400).json({ error: 'FEN required' });
+  }
+
+  // Validate FEN here
+  if (!fenValidator.validate(fen)) {
+    return res.status(400).json({ error: 'Invalid FEN string' });
+  }
+
   const searchDepth = depth || 10;
 
   try {

@@ -45,7 +45,7 @@ app.post('/evaluate', async (req, res) => {
   }
 
   // Validate FEN here
-  if (!fenValidator.validate(fen)) {
+  if (!fenValidator(fen)) {
     return res.status(400).json({ error: 'Invalid FEN string' });
   }
 

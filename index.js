@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 function runStockfish(fen, depth) {
   return new Promise((resolve, reject) => {
-    const stockfish = spawn('stockfish');
+    const stockfish = spawn('./stockfish');
 
     let bestMove = null;
 

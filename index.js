@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
-const validateFEN = require('fen-validator').default;
+// const validateFEN = require('fen-validator').default;
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -45,9 +45,9 @@ app.post('/evaluate', async (req, res) => {
   }
 
   // Validate FEN here
-  if (!validateFEN(fen)) {
-    return res.status(400).json({ error: 'Invalid FEN string' });
-  }
+  // if (!validateFEN(fen)) {
+  //   return res.status(400).json({ error: 'Invalid FEN string' });
+  // }
 
   const searchDepth = depth || 10;
 
